@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotStatic.Core", "DotStatic.Core\DotStatic.Core.csproj", "{587E81E0-14F2-48A0-A910-65360B85C976}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B74AFC68-9EAA-4CFB-BF4F-251336EFAD4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotStatic.CommandLine", "DotStatic.CommandLine\DotStatic.CommandLine.csproj", "{387D6EDD-C867-42C6-9F77-8A849EFF903A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,10 @@ Global
 		{587E81E0-14F2-48A0-A910-65360B85C976}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{587E81E0-14F2-48A0-A910-65360B85C976}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{587E81E0-14F2-48A0-A910-65360B85C976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{387D6EDD-C867-42C6-9F77-8A849EFF903A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{387D6EDD-C867-42C6-9F77-8A849EFF903A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{387D6EDD-C867-42C6-9F77-8A849EFF903A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{387D6EDD-C867-42C6-9F77-8A849EFF903A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
