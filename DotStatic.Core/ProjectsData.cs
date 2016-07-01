@@ -5,41 +5,41 @@ namespace DotStatic.Core
 {
     public class ProjectsData
     {
-        private readonly Dictionary<string, List<string>> referencedTypesByProj;
-        private readonly Dictionary<string, List<string>> declaredTypesByProj;
+        private readonly Dictionary<string, HashSet<string>> referencedTypesByProj;
+        private readonly Dictionary<string, HashSet<string>> declaredTypesByProj;
 
         public ProjectsData()
         {
-            referencedTypesByProj = new Dictionary<string, List<string>>();
-            declaredTypesByProj = new Dictionary<string, List<string>>();
+            referencedTypesByProj = new Dictionary<string, HashSet<string>>();
+            declaredTypesByProj = new Dictionary<string, HashSet<string>>();
         }
 
-        public IReadOnlyDictionary<string, List<string>> ReferencedTypesByProj { get{ return referencedTypesByProj;} }
-        public IReadOnlyDictionary<string, List<string>> DeclaredTypesByProj { get { return declaredTypesByProj; } }
+        public IReadOnlyDictionary<string, IEnumerable<string>> ReferencedTypesByProj { get{ return referencedTypesByProj.ToDictionary(a => a.Key, a => a.Value.AsEnumerable()); } }
+        public IReadOnlyDictionary<string, IEnumerable<string>> DeclaredTypesByProj { get { return declaredTypesByProj.ToDictionary(a => a.Key, a => a.Value.AsEnumerable()); } }
 
         internal void AddReferencedTypes(string project, IEnumerable<string> typesToAdd)
         {
-            List<string> types;
+            HashSet<string> types;
             if (referencedTypesByProj.TryGetValue(project, out types))
             {
-                types.AddRange(types);
+                types.UnionWith(typesToAdd);
             }
             else
             {
-                referencedTypesByProj[project] = typesToAdd.ToList();
+                referencedTypesByProj[project] = new HashSet<string>(typesToAdd);
             }
         }
 
         internal void AddDeclaredTypes(string project, IEnumerable<string> typesToAdd)
         {
-            List<string> types;
+            HashSet<string> types;
             if (declaredTypesByProj.TryGetValue(project, out types))
             {
-                types.AddRange(types);
+                types.UnionWith(typesToAdd);
             }
             else
             {
-                declaredTypesByProj[project] = typesToAdd.ToList();
+                declaredTypesByProj[project] = new HashSet<string>(typesToAdd);
             }
         }
     }
