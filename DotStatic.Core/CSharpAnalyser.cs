@@ -47,6 +47,7 @@ namespace DotStatic.Core
             return syntaxNodes
                 .OfType<ClassDeclarationSyntax>()
                 .Select(id => sm.GetDeclaredSymbol(id))
+                .Where(si => si.DeclaredAccessibility == Accessibility.Public)
                 .OfType<INamedTypeSymbol>()
                 .ToArray();
         }
@@ -57,7 +58,7 @@ namespace DotStatic.Core
             // IdentifierNameSyntax: var keyword, identifiers of any kind (including type names)
             var namedTypes = syntaxNodes
                 .OfType<IdentifierNameSyntax>()
-                .Select(id => sm.GetSymbolInfo(id).Symbol)
+                .Select(id => sm.GetSymbolInfo(id).Symbol)                
                 .OfType<INamedTypeSymbol>()
                 .ToArray();
 
