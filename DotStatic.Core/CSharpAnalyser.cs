@@ -33,8 +33,8 @@ namespace DotStatic.Core
                         var sm = compilation.GetSemanticModel(st);
                         SyntaxNode[] syntaxNodes = nodes as SyntaxNode[] ?? nodes.ToArray();
 
-                        IEnumerable<INamedTypeSymbol> symbolsReferenced = GetReferencedSymbols(sm, syntaxNodes);
-                        IEnumerable<INamedTypeSymbol> symbolsDeclared = GetClassDeclarations(sm, syntaxNodes);
+                        IEnumerable<ITypeSymbol> symbolsReferenced = GetReferencedSymbols(sm, syntaxNodes);
+                        IEnumerable<ITypeSymbol> symbolsDeclared = GetClassDeclarations(sm, syntaxNodes);
                         result.AddReferencedTypes(project.Name, symbolsReferenced.Select(x => x.ToDisplayString()));
                         result.AddDeclaredTypes(project.Name, symbolsDeclared.Select(x => x.ToDisplayString()));
                     }
@@ -56,15 +56,17 @@ namespace DotStatic.Core
                 .OfType<INamedTypeSymbol>()
                 .ToArray();
         }
-
-        private static IEnumerable<INamedTypeSymbol> GetReferencedSymbols(SemanticModel sm, SyntaxNode[] syntaxNodes)
+        
+        private static IEnumerable<ITypeSymbol> GetReferencedSymbols(SemanticModel sm, SyntaxNode[] syntaxNodes)
         {
-            HashSet<INamedTypeSymbol> symbols = new HashSet<INamedTypeSymbol>();
+            HashSet<ITypeSymbol> symbols = new HashSet<ITypeSymbol>();
             // IdentifierNameSyntax: var keyword, identifiers of any kind (including type names)
             var namedTypes = syntaxNodes
                 .OfType<IdentifierNameSyntax>()
                 .Select(id => sm.GetSymbolInfo(id).Symbol)                
-                .OfType<INamedTypeSymbol>()
+                .OfType<INamedTypeSymbol>()                
+                .SelectMany(x => x.TypeArguments.Add(x.OriginalDefinition))
+                .Where(x => !x.IsAnonymousType && x.SpecialType != SpecialType.System_Void && x.TypeKind != TypeKind.Error)
                 .ToArray();
 
             symbols.UnionWith(namedTypes);
@@ -73,7 +75,9 @@ namespace DotStatic.Core
             var expressionTypes = syntaxNodes
                 .OfType<ExpressionSyntax>()
                 .Select(ma => sm.GetTypeInfo(ma).Type)
-                .OfType<INamedTypeSymbol>()
+                .OfType<INamedTypeSymbol>()                
+                .SelectMany(x => x.TypeArguments.Add(x.OriginalDefinition))
+                .Where(x => !x.IsAnonymousType && x.SpecialType != SpecialType.System_Void && x.TypeKind != TypeKind.Error)
                 .ToArray();
 
             symbols.UnionWith(expressionTypes);
