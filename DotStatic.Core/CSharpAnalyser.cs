@@ -9,6 +9,11 @@ namespace DotStatic.Core
 {
     public class CSharpAnalyser
     {
+        public static ProjectsData AnalyseSolutions(params string[] solutionPaths)
+        {
+            return solutionPaths.Select(s => AnalyseSolution(s)).Aggregate(ProjectsData.Merge);
+        }
+
         public static ProjectsData AnalyseSolution(string solutionPath)
         {
             ProjectsData result = new ProjectsData();

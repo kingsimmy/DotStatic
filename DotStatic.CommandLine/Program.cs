@@ -1,4 +1,5 @@
 ﻿using DotStatic.Core;
+using Newtonsoft.Json;
 using System;
 
 namespace DotStatic.CommandLine
@@ -9,11 +10,12 @@ namespace DotStatic.CommandLine
         {
             if(args.Length < 1)
             {
-                Console.WriteLine("First argument should be a solutionpath.");
+                Console.WriteLine("Arguments should contain the path to a .sln file or space separated paths for multiple .sln files.");
                 Environment.Exit(1);
             }
-            ProjectsData data = CSharpAnalyser.AnalyseSolution(args[0]);
-            Console.ReadLine();
+            ProjectsData data = CSharpAnalyser.AnalyseSolutions(args);
+            Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
+            Console.WriteLine();
         }
     }
 }
