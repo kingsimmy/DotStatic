@@ -1,5 +1,5 @@
 # DotStatic
-[![NuGet](https://img.shields.io/badge/nuget-v1.0-green.svg)](https://www.nuget.org/packages/DotStatic.Core/1.0.0)
+[![NuGet](https://img.shields.io/badge/nuget-v1.1-green.svg)](https://www.nuget.org/packages/DotStatic.Core/1.1.0)
 
 C Sharp C# Static Analysis
 
