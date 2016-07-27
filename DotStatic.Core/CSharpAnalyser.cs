@@ -50,13 +50,18 @@ namespace DotStatic.Core
         private static IEnumerable<INamedTypeSymbol> GetClassDeclarations(SemanticModel sm, SyntaxNode[] syntaxNodes)
         {
             return syntaxNodes
-                .OfType<ClassDeclarationSyntax>()
+                .OfType<BaseTypeDeclarationSyntax>()
                 .Select(id => sm.GetDeclaredSymbol(id))
-                .Where(si => si.DeclaredAccessibility == Accessibility.Public)
+                .Where(si => IsPublic(si))
                 .OfType<INamedTypeSymbol>()
                 .ToArray();
         }
-        
+
+        private static bool IsPublic(ISymbol si)
+        {
+            return si.Kind == SymbolKind.Namespace || (si.DeclaredAccessibility == Accessibility.Public && (si.ContainingSymbol == null || IsPublic(si.ContainingSymbol)));
+        }
+
         private static IEnumerable<ITypeSymbol> GetReferencedSymbols(SemanticModel sm, SyntaxNode[] syntaxNodes)
         {
             HashSet<ITypeSymbol> symbols = new HashSet<ITypeSymbol>();
