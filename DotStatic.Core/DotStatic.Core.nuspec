@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>DotStatic</title>
+    <authors>kingsimmy</authors>
+    <owners>kingsimmy</owners>
+    <licenseUrl>https://github.com/kingsimmy/DotStatic/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/kingsimmy/DotStatic</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Static analysis for C# solutions. Lets you see classes defined per project and classes referenced per project.</description>
+    <releaseNotes>Initial</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>C# Static Analysis Classes Project Solution</tags>
+  </metadata>
+</package>
